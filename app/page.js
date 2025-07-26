@@ -1,7 +1,7 @@
 // import BlurText from "@/animations/BlurText";
 
 import BlurText from "../animations/BlurText.jsx";
-import { Button } from "../components/ui/button";
+import { Button } from "../components/ui/button.jsx";
 import { Layers, Pencil, Section, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

@@ -1,8 +1,12 @@
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
 import { AppSidebar } from "../components/app-sidebar";
 import Navbar from "../components/NavBar";
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "sonner";
+import { AuthProvider } from "../components/Providers/AuthProvider";
 
 
 const geistSans = Geist({
@@ -26,17 +30,19 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SidebarProvider>
-          
-          <AppSidebar/>
+        
             <main className="w-full">
-              <SidebarTrigger/>
-              <Navbar/>
-               {children}
+             
+             <AuthProvider>
+              {children}
+
+             </AuthProvider>
+               
             </main>
           
           
-        </SidebarProvider>
+      
+       
        
       </body>
     </html>
