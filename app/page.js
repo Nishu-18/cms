@@ -1,12 +1,14 @@
 // import BlurText from "@/animations/BlurText";
 
+import { getAuthSession } from "../lib/auth";
 import BlurText from "../animations/BlurText.jsx";
 import { Button } from "../components/ui/button.jsx";
 import { Layers, Pencil, Section, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const session=await getAuthSession()
   return (
     <main className="w-full">
       <section className="flex flex-col justify-center h-[50vh] sm:h-[70vh] lg:h-[80vh] items-center w-full">
@@ -26,7 +28,7 @@ export default function LandingPage() {
           </div>
 
           <div className="flex gap-3">
-            <Link href={"/sign-in"} className="bg-gray-200 text-black px-4 py-1 hover:bg-gray-400 transition-all delay-100 duration-200  rounded">Try it out!</Link>
+            <Link href={!session?"/sign-in":"/dashboard"} className="bg-gray-200 text-black px-4 py-1 hover:bg-gray-400 transition-all delay-100 duration-200  rounded">Try it out!</Link>
             <Button variant={"outline"}>Learn More</Button>
           </div>
         </div>

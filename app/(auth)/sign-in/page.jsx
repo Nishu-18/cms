@@ -8,10 +8,11 @@ export default function SignIn(){
     const onGoogleSignIn=()=>{
        try {
         signIn("google")
-        toast.error("Failed to sign in")
+        
         
        } catch (error) {
         console.error(error)
+        toast.error("Failed to sign in")
         
        }
         

@@ -7,6 +7,7 @@ import Navbar from "../components/NavBar";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
 import { AuthProvider } from "../components/Providers/AuthProvider";
+import ServerAuthProvider from "../components/Providers/ServerAuthProvider";
 
 
 const geistSans = Geist({
@@ -33,10 +34,9 @@ export default function RootLayout({ children }) {
         
             <main className="w-full">
              
-             <AuthProvider>
+             <ServerAuthProvider>
               {children}
-
-             </AuthProvider>
+             </ServerAuthProvider>
                
             </main>
           
