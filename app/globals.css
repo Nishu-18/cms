@@ -125,3 +125,25 @@
 .true-focus-class-name {
   font-size: 10px !important;
 }
+
+.ql-snow{
+  border: transparent !important;
+  
+}
+.ql-editor>p{
+  font-size: 1rem;
+}
+.ql-editor{
+  min-height: 200px;
+  max-height:500px ;
+  overflow-y: auto;
+  background-color: rgb(39, 39, 42);
+}
+.ql-toolbar{
+  background-color: gray;
+  border-radius: 4px;
+}
+.ql-syntax{
+  background-color: rgb(83,83,83);
+  font-family: monospace;
+}

@@ -79,6 +79,7 @@ model Post{
   content String
   thumbnail  String ? 
   desc    String?
+  keywords String?
   excerpts   String? 
   author User  @relation(fields: [authorId],references: [id])
   authorId String  

@@ -20,7 +20,9 @@ export default function Navbar({session}) {
     const userData={
         name:session?.user?.name||"Guest",
         email:session?.user?.email||"noemail@gmail.com",
-        image:session?.user?.image||"",}
+        image:session?.user?.image||"",
+        id:session?.user?.id||"",
+        role:session?.user?.role||"",}
     return (
         <div className="w-full flex justify-between h-12 px-8">
             <Link className="flex " href={'/'}><span className="font-extrabold text-[5px]">

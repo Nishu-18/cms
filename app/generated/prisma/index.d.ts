@@ -79,7 +79,7 @@ export const PostStatus: typeof $Enums.PostStatus
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -305,8 +305,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.12.0
-   * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
+   * Prisma Client JS version: 6.13.0
+   * Query Engine version: 361e86d0ea4987e9f53a565309b3eed797a6bcbd
    */
   export type PrismaVersion = {
     client: string
@@ -1202,16 +1202,24 @@ export namespace Prisma {
     /**
      * @example
      * ```
-     * // Defaults to stdout
+     * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
      * 
-     * // Emit as events
+     * // Emit as events only
      * log: [
-     *   { emit: 'stdout', level: 'query' },
-     *   { emit: 'stdout', level: 'info' },
-     *   { emit: 'stdout', level: 'warn' }
-     *   { emit: 'stdout', level: 'error' }
+     *   { emit: 'event', level: 'query' },
+     *   { emit: 'event', level: 'info' },
+     *   { emit: 'event', level: 'warn' }
+     *   { emit: 'event', level: 'error' }
      * ]
+     * 
+     * / Emit as events and log to stdout
+     * og: [
+     *  { emit: 'stdout', level: 'query' },
+     *  { emit: 'stdout', level: 'info' },
+     *  { emit: 'stdout', level: 'warn' }
+     *  { emit: 'stdout', level: 'error' }
+     * 
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
@@ -1258,10 +1266,15 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
-  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
-    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
-    : never
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+
+  export type GetLogType<T> = CheckIsLogLevel<
+    T extends LogDefinition ? T['level'] : T
+  >;
+
+  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
+    ? GetLogType<T[number]>
+    : never;
 
   export type QueryEvent = {
     timestamp: Date
@@ -5840,6 +5853,7 @@ export namespace Prisma {
     content: string | null
     thumbnail: string | null
     desc: string | null
+    keywords: string | null
     excerpts: string | null
     authorId: string | null
     catSlug: string | null
@@ -5854,6 +5868,7 @@ export namespace Prisma {
     content: string | null
     thumbnail: string | null
     desc: string | null
+    keywords: string | null
     excerpts: string | null
     authorId: string | null
     catSlug: string | null
@@ -5868,6 +5883,7 @@ export namespace Prisma {
     content: number
     thumbnail: number
     desc: number
+    keywords: number
     excerpts: number
     authorId: number
     catSlug: number
@@ -5884,6 +5900,7 @@ export namespace Prisma {
     content?: true
     thumbnail?: true
     desc?: true
+    keywords?: true
     excerpts?: true
     authorId?: true
     catSlug?: true
@@ -5898,6 +5915,7 @@ export namespace Prisma {
     content?: true
     thumbnail?: true
     desc?: true
+    keywords?: true
     excerpts?: true
     authorId?: true
     catSlug?: true
@@ -5912,6 +5930,7 @@ export namespace Prisma {
     content?: true
     thumbnail?: true
     desc?: true
+    keywords?: true
     excerpts?: true
     authorId?: true
     catSlug?: true
@@ -5999,6 +6018,7 @@ export namespace Prisma {
     content: string
     thumbnail: string | null
     desc: string | null
+    keywords: string | null
     excerpts: string | null
     authorId: string
     catSlug: string
@@ -6030,6 +6050,7 @@ export namespace Prisma {
     content?: boolean
     thumbnail?: boolean
     desc?: boolean
+    keywords?: boolean
     excerpts?: boolean
     authorId?: boolean
     catSlug?: boolean
@@ -6046,6 +6067,7 @@ export namespace Prisma {
     content?: boolean
     thumbnail?: boolean
     desc?: boolean
+    keywords?: boolean
     excerpts?: boolean
     authorId?: boolean
     catSlug?: boolean
@@ -6062,6 +6084,7 @@ export namespace Prisma {
     content?: boolean
     thumbnail?: boolean
     desc?: boolean
+    keywords?: boolean
     excerpts?: boolean
     authorId?: boolean
     catSlug?: boolean
@@ -6078,6 +6101,7 @@ export namespace Prisma {
     content?: boolean
     thumbnail?: boolean
     desc?: boolean
+    keywords?: boolean
     excerpts?: boolean
     authorId?: boolean
     catSlug?: boolean
@@ -6085,7 +6109,7 @@ export namespace Prisma {
     status?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "thumbnail" | "desc" | "excerpts" | "authorId" | "catSlug" | "createdAt" | "status", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "content" | "thumbnail" | "desc" | "keywords" | "excerpts" | "authorId" | "catSlug" | "createdAt" | "status", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Post$categoryArgs<ExtArgs>
@@ -6112,6 +6136,7 @@ export namespace Prisma {
       content: string
       thumbnail: string | null
       desc: string | null
+      keywords: string | null
       excerpts: string | null
       authorId: string
       catSlug: string
@@ -6548,6 +6573,7 @@ export namespace Prisma {
     readonly content: FieldRef<"Post", 'String'>
     readonly thumbnail: FieldRef<"Post", 'String'>
     readonly desc: FieldRef<"Post", 'String'>
+    readonly keywords: FieldRef<"Post", 'String'>
     readonly excerpts: FieldRef<"Post", 'String'>
     readonly authorId: FieldRef<"Post", 'String'>
     readonly catSlug: FieldRef<"Post", 'String'>
@@ -8105,6 +8131,7 @@ export namespace Prisma {
     content: 'content',
     thumbnail: 'thumbnail',
     desc: 'desc',
+    keywords: 'keywords',
     excerpts: 'excerpts',
     authorId: 'authorId',
     catSlug: 'catSlug',
@@ -8513,6 +8540,7 @@ export namespace Prisma {
     content?: StringFilter<"Post"> | string
     thumbnail?: StringNullableFilter<"Post"> | string | null
     desc?: StringNullableFilter<"Post"> | string | null
+    keywords?: StringNullableFilter<"Post"> | string | null
     excerpts?: StringNullableFilter<"Post"> | string | null
     authorId?: StringFilter<"Post"> | string
     catSlug?: StringFilter<"Post"> | string
@@ -8529,6 +8557,7 @@ export namespace Prisma {
     content?: SortOrder
     thumbnail?: SortOrderInput | SortOrder
     desc?: SortOrderInput | SortOrder
+    keywords?: SortOrderInput | SortOrder
     excerpts?: SortOrderInput | SortOrder
     authorId?: SortOrder
     catSlug?: SortOrder
@@ -8548,6 +8577,7 @@ export namespace Prisma {
     content?: StringFilter<"Post"> | string
     thumbnail?: StringNullableFilter<"Post"> | string | null
     desc?: StringNullableFilter<"Post"> | string | null
+    keywords?: StringNullableFilter<"Post"> | string | null
     excerpts?: StringNullableFilter<"Post"> | string | null
     authorId?: StringFilter<"Post"> | string
     catSlug?: StringFilter<"Post"> | string
@@ -8564,6 +8594,7 @@ export namespace Prisma {
     content?: SortOrder
     thumbnail?: SortOrderInput | SortOrder
     desc?: SortOrderInput | SortOrder
+    keywords?: SortOrderInput | SortOrder
     excerpts?: SortOrderInput | SortOrder
     authorId?: SortOrder
     catSlug?: SortOrder
@@ -8584,6 +8615,7 @@ export namespace Prisma {
     content?: StringWithAggregatesFilter<"Post"> | string
     thumbnail?: StringNullableWithAggregatesFilter<"Post"> | string | null
     desc?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    keywords?: StringNullableWithAggregatesFilter<"Post"> | string | null
     excerpts?: StringNullableWithAggregatesFilter<"Post"> | string | null
     authorId?: StringWithAggregatesFilter<"Post"> | string
     catSlug?: StringWithAggregatesFilter<"Post"> | string
@@ -8947,6 +8979,7 @@ export namespace Prisma {
     content: string
     thumbnail?: string | null
     desc?: string | null
+    keywords?: string | null
     excerpts?: string | null
     createdAt?: Date | string
     status?: $Enums.PostStatus
@@ -8961,6 +8994,7 @@ export namespace Prisma {
     content: string
     thumbnail?: string | null
     desc?: string | null
+    keywords?: string | null
     excerpts?: string | null
     authorId: string
     catSlug: string
@@ -8975,6 +9009,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     desc?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: NullableStringFieldUpdateOperationsInput | string | null
     excerpts?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
@@ -8989,6 +9024,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     desc?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: NullableStringFieldUpdateOperationsInput | string | null
     excerpts?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     catSlug?: StringFieldUpdateOperationsInput | string
@@ -9003,6 +9039,7 @@ export namespace Prisma {
     content: string
     thumbnail?: string | null
     desc?: string | null
+    keywords?: string | null
     excerpts?: string | null
     authorId: string
     catSlug: string
@@ -9017,6 +9054,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     desc?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: NullableStringFieldUpdateOperationsInput | string | null
     excerpts?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
@@ -9029,6 +9067,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     desc?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: NullableStringFieldUpdateOperationsInput | string | null
     excerpts?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     catSlug?: StringFieldUpdateOperationsInput | string
@@ -9428,6 +9467,7 @@ export namespace Prisma {
     content?: SortOrder
     thumbnail?: SortOrder
     desc?: SortOrder
+    keywords?: SortOrder
     excerpts?: SortOrder
     authorId?: SortOrder
     catSlug?: SortOrder
@@ -9442,6 +9482,7 @@ export namespace Prisma {
     content?: SortOrder
     thumbnail?: SortOrder
     desc?: SortOrder
+    keywords?: SortOrder
     excerpts?: SortOrder
     authorId?: SortOrder
     catSlug?: SortOrder
@@ -9456,6 +9497,7 @@ export namespace Prisma {
     content?: SortOrder
     thumbnail?: SortOrder
     desc?: SortOrder
+    keywords?: SortOrder
     excerpts?: SortOrder
     authorId?: SortOrder
     catSlug?: SortOrder
@@ -10126,6 +10168,7 @@ export namespace Prisma {
     content: string
     thumbnail?: string | null
     desc?: string | null
+    keywords?: string | null
     excerpts?: string | null
     createdAt?: Date | string
     status?: $Enums.PostStatus
@@ -10139,6 +10182,7 @@ export namespace Prisma {
     content: string
     thumbnail?: string | null
     desc?: string | null
+    keywords?: string | null
     excerpts?: string | null
     catSlug: string
     createdAt?: Date | string
@@ -10241,6 +10285,7 @@ export namespace Prisma {
     content?: StringFilter<"Post"> | string
     thumbnail?: StringNullableFilter<"Post"> | string | null
     desc?: StringNullableFilter<"Post"> | string | null
+    keywords?: StringNullableFilter<"Post"> | string | null
     excerpts?: StringNullableFilter<"Post"> | string | null
     authorId?: StringFilter<"Post"> | string
     catSlug?: StringFilter<"Post"> | string
@@ -10363,6 +10408,7 @@ export namespace Prisma {
     content: string
     thumbnail?: string | null
     desc?: string | null
+    keywords?: string | null
     excerpts?: string | null
     createdAt?: Date | string
     status?: $Enums.PostStatus
@@ -10376,6 +10422,7 @@ export namespace Prisma {
     content: string
     thumbnail?: string | null
     desc?: string | null
+    keywords?: string | null
     excerpts?: string | null
     authorId: string
     createdAt?: Date | string
@@ -10435,6 +10482,7 @@ export namespace Prisma {
     content: string
     thumbnail?: string | null
     desc?: string | null
+    keywords?: string | null
     excerpts?: string | null
     catSlug: string
     createdAt?: Date | string
@@ -10508,6 +10556,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     desc?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: NullableStringFieldUpdateOperationsInput | string | null
     excerpts?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
@@ -10521,6 +10570,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     desc?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: NullableStringFieldUpdateOperationsInput | string | null
     excerpts?: NullableStringFieldUpdateOperationsInput | string | null
     catSlug?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10534,6 +10584,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     desc?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: NullableStringFieldUpdateOperationsInput | string | null
     excerpts?: NullableStringFieldUpdateOperationsInput | string | null
     catSlug?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10547,6 +10598,7 @@ export namespace Prisma {
     content: string
     thumbnail?: string | null
     desc?: string | null
+    keywords?: string | null
     excerpts?: string | null
     authorId: string
     createdAt?: Date | string
@@ -10560,6 +10612,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     desc?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: NullableStringFieldUpdateOperationsInput | string | null
     excerpts?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPostStatusFieldUpdateOperationsInput | $Enums.PostStatus
@@ -10573,6 +10626,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     desc?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: NullableStringFieldUpdateOperationsInput | string | null
     excerpts?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10586,6 +10640,7 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     desc?: NullableStringFieldUpdateOperationsInput | string | null
+    keywords?: NullableStringFieldUpdateOperationsInput | string | null
     excerpts?: NullableStringFieldUpdateOperationsInput | string | null
     authorId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
