@@ -1,6 +1,7 @@
+import Image from "next/image";
 import { useState } from "react";
 
-export default function ImageUploader({ returnImage }) {
+export default function ImageUploader({ returnImage,preLoadedImage }) {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -28,6 +29,18 @@ export default function ImageUploader({ returnImage }) {
       setLoading(false);
     };
   };
+  if(preLoadedImage){
+    return (
+      <div>
+         <label>
+        <span className="border-2 border-gray-300 p-2 border-dashed">Update Cover Image</span>
+        <input type="file" onChange={handleImageUpload} hidden />
+        <Image src={preLoadedImage} alt="Uploaded" width={300} height={170} className="mt-4" />
+      </label>
+
+      </div>
+    )
+  }
 
   return (
     <div>

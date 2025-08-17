@@ -3,7 +3,7 @@ import Image from "next/image";
 import "../../styles/blogs.css"
 
 const fetchSingleBlog=async(slug)=>{
-    const res=await fetch(process.env.BASE_URL+"/api/v1/get/"+slug);
+    const res=await fetch(process.env.BASE_URL+"/api/v1/get/"+slug,{next:{tags:[slug]}});
     const data=await res.json();
     console.log(data,"sinle blog");
     

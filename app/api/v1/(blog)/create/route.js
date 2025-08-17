@@ -12,11 +12,13 @@ export async function  POST(request) {
         return NextResponse.json({message:"UnAuthorized"},{status:401});
     }
     const body=await request.json();
-    const {title,ogImage,slug,content,excerpt,category,metaDescription,keyword,status}=body
-    if(!title||!ogImage||!slug||!content||!excerpt||!category||!metaDescription||!keyword||!status){
+    console.log(body,"body");
+    
+    const {title,ogImage,slug,content,excerpt,category,metaDescription,keywords,status}=body
+    if(!title||!ogImage||!slug||!content||!excerpt||!category||!metaDescription||!keywords||!status){
         return NextResponse.json({message:"All fields are required"},{status:400});
     }
-    console.log(title,ogImage,slug,content,excerpt,category,metaDescription,keyword,status,"content from body");
+    console.log(title,ogImage,slug,content,excerpt,category,metaDescription,keywords,status,"content from body");
     const statusOfPost=status||"DRAFT";
     let categoryCheck=await prisma.category.findUnique({where:{slug:category}});
 
@@ -38,15 +40,11 @@ export async function  POST(request) {
             slug,
             thumbnail:ogImage||null,
             desc:metaDescription||null,
-            keywords:keyword||null,
+            keywords:keywords||null,
             excerpts:excerpt||null,
             catSlug:categoryCheck.slug,
             authorId:session.user.id,
             status:statusOfPost,
-            
-
-
-
         }
         
     })
