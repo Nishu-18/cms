@@ -41,9 +41,10 @@ export default function EdiatableBlogCards({post}) {
 
         </div>
         <div className="space-x-2 flex gap-3 items-center">
-            {currentStatus==='PUBLISHED'?<Button onClick={()=>convertDraft(post.id)} variant={"outline"}>Convert to Draft</Button>:<Button onClick={()=>convertPublish(post.id)} variant={"outline"}>Publish</Button>}
-            {currentStatus==='PUBLISHED' && <Button onClick={()=>{router.push(`/blog/${post.slug}`)}}>View</Button>}
-            <Trash onClick={()=>handleDelete(post.id)} className="size-5 text-gray-400"/>
+          {currentStatus === "PUBLISHED" ? <Button onClick={()=> handleConvertToDraft(post.id)} variant="outline">Convert to Draft</Button> : <Button onClick={()=> publishABlog(post.id)}>Publish</Button>}
+                <Button onClick={()=> router.push(`/draft/${post.slug}`)} variant="outline">Edit</Button>
+                {currentStatus === "PUBLISHED" && <Button onClick={()=> router.push(`/blog/${post.slug}`)}>View</Button>}
+                <Trash onClick={()=> handleDelete(post.id)} className="size-5 text-gray-400" /> 
         </div>
           
         </div>
