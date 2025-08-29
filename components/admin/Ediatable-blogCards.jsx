@@ -15,7 +15,7 @@ export default function EdiatableBlogCards({post}) {
         }
        
     }
-    const convertPublish=async(id)=>{
+    const publishABlog=async(id)=>{
         const res=await fetch(`/api/v1/state`,{method:"PATCH",headers:{'Content-Type':'application/json'},body:JSON.stringify({id,status:"PUBLISHED"})})
         if(res.ok){
             setCurrentStatus('PUBLISHED')
@@ -23,7 +23,7 @@ export default function EdiatableBlogCards({post}) {
         }
     
     }
-    const convertDraft=async(id)=>{
+    const handleConvertToDraft=async(id)=>{
         const res=await fetch(`/api/v1/state`,{method:"PATCH",headers:{'Content-Type':'application/json'},body:JSON.stringify({id,status:"DRAFT"})})
         if(res.ok){
             setCurrentStatus('DRAFT')
