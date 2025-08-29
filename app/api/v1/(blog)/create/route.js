@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 
 export async function  POST(request) {
     const session=await getAuthSession();
-    console.log(session.user.id,"session");
     
   
     
@@ -12,13 +11,13 @@ export async function  POST(request) {
         return NextResponse.json({message:"UnAuthorized"},{status:401});
     }
     const body=await request.json();
-    console.log(body,"body");
+    
     
     const {title,ogImage,slug,content,excerpt,category,metaDescription,keywords,status}=body
     if(!title||!ogImage||!slug||!content||!excerpt||!category||!metaDescription||!keywords||!status){
         return NextResponse.json({message:"All fields are required"},{status:400});
     }
-    console.log(title,ogImage,slug,content,excerpt,category,metaDescription,keywords,status,"content from body");
+   
     const statusOfPost=status||"DRAFT";
     let categoryCheck=await prisma.category.findUnique({where:{slug:category}});
 

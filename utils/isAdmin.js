@@ -9,7 +9,7 @@ const listOfAdmins=['test@gmail.com',
         let emailMatch=listOfAdmins.some(singleEmail=>{
             return singleEmail.toLowerCase().trim()===userEmail
         })
-        console.log(emailMatch,'email match');
+        
         if(session.user.role=='admin' || emailMatch && session.user?.email) return true;
         return false;
         

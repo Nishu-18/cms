@@ -22,7 +22,7 @@ export default function Search() {
                 setError("")
             }
             const posts=await res.json()
-            console.log(posts,"posts");
+           
             
             setResults(posts.posts)
             

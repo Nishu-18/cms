@@ -14,14 +14,14 @@ export default async function LandingPage() {
       <section className="flex flex-col justify-center h-[50vh] sm:h-[70vh] lg:h-[80vh] items-center w-full">
         <div className="flex flex-col justify-center items-center gap-8 text-center">
           <div className="flex flex-col gap-2">
-            {/* <h1 className="text-3xl font-bold tracking-tighter sm:text:-4xl lg:text-5xl">Manage your content with ease</h1> */}
+            {/* <h1 className=" text-3xl font-bold tracking-tighter sm:text:-4xl lg:text-5xl">Manage your content with ease</h1> */}
             <BlurText
               text="Manage your content with ease!"
               delay={150}
               animateBy="words"
               direction="top"
               // onAnimationComplete={handleAnimationComplete}
-              className="text-3xl font-bold tracking-tighter sm:text:-4xl lg:text-5xl"
+              className=" ml-5 text-3xl font-bold tracking-tighter sm:text:-4xl lg:text-5xl"
             />
             <p className="text-gray-400 max-w-[700px] mx-auto">Streamline your content workflow, publish with confidence</p>
 

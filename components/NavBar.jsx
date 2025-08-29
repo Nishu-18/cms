@@ -14,7 +14,7 @@ import { SignOut } from "./SignOut";
 
 
 export default function Navbar({session}) {
-    console.log(session);
+  
     
 
     const userData={
@@ -44,7 +44,7 @@ export default function Navbar({session}) {
 
 
 function DropDownModule({user}){
-    console.log(user);
+   
     
     return (
         <div className="cursor-pointer">

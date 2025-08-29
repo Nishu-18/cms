@@ -33,8 +33,8 @@ const BlogCard=({title,excerpt,image,url})=>{
 
             
             
-            <h1 className="font-bold text-lg md:text-xl text-gray-200">{title}</h1>
-            <p className=" text-sm text-gray-400">{excerpt}</p>
+            <h1 className="font-bold text-sm md:text-xl text-gray-200">{title}</h1>
+            <p className=" text-xs text-gray-400">{excerpt.length>100 ?excerpt.substring(0,100)+ "..." : excerpt}</p>
            
             <Link className="bg-zinc-600/70 py-2 px-3 rounded w-fit text-xs" href={`/blog/${url}`}>Read more</Link>
         </div>

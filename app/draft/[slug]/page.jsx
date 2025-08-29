@@ -24,7 +24,7 @@ export default  function EditPreviousDraft({ params }){
                 })
             }
             const response = await res.json();
-            console.log(response, ' direct before saving')
+           
             setPost(response);
         }
         fetchPost();

@@ -2,6 +2,7 @@
 import { useForm } from "react-hook-form"
 import dynamic from "next/dynamic";
 import {z, ZodError} from "zod"
+import { Sparkle } from "lucide-react";
 
 
 import 'react-quill-new/dist/quill.snow.css';
@@ -35,7 +36,7 @@ const schema=z.object({
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false })
 export default function DraftForm({onSave,initialData}) {
-    console.log(initialData,"initialData");
+    
     const reactQuilRef=useRef(null)
     const ideaRef=useRef(null)
     
@@ -52,7 +53,7 @@ export default function DraftForm({onSave,initialData}) {
         try {
             const response=await AIContent({text:ideaRef.current.value,customInstructions:'Generate content with proper facts',contentGen:true});
             setContent(response)
-            console.log(response,"response form AI");
+            
             
             
         } catch (error) {
@@ -65,7 +66,7 @@ export default function DraftForm({onSave,initialData}) {
     }
     const handleSelectionChange=async()=>{
         const selection=reactQuilRef.current.getEditor().getSelection();
-        console.log(selection);
+        
         
         setSelection(selection && selection.length>0);
     }
@@ -140,7 +141,7 @@ export default function DraftForm({onSave,initialData}) {
             <input {...register("title")} type="text" className="bg-zinc-600 px-3 py-2 rounded font-bold text-xl" placeholder="Enter post title" />
             <ReactQuill onChangeSelection={handleSelectionChange} ref={reactQuilRef} theme="snow" value={content} onChange={setContent} modules={{toolbar:[[{header:'1'},{header:'2'},{header:'3'}],[{size:[]}],["bold","italic","underline","strike"],[{list:'ordered'},{list:'bullet'}],["link","image","code-block"]]}} formats={["header","font","size","bold","italic","underline","strike","link","image","code-block"]} />
             <Dialog>
-  <DialogTrigger>Generate Content using AI</DialogTrigger>
+  <DialogTrigger ><div className="flex  items-center border-2 sm:w-1/5 gap-2 bold px-2 py-2 border-solid">Generate Content using AI<Sparkle/></div></DialogTrigger>
   <DialogContent>
     <DialogHeader>
         <DialogTitle>Generate Content</DialogTitle>
@@ -168,7 +169,7 @@ export default function DraftForm({onSave,initialData}) {
                     <option value="DRAFT">Draft</option>
                     <option value="PUBLISHED">Publish</option>
                 </select>
-                <button disabled={!ogImage} type="submit" className="bg-zinc-800 px-3 py-2 rounded cursor-pointer w-1/10">Save</button>
+                <button disabled={!ogImage} type="submit" className="bg-zinc-800 px-3 py-2 rounded cursor-pointer sm:w-1/10">Save</button>
 
             </div>
             

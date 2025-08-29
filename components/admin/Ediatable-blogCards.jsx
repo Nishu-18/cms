@@ -40,7 +40,7 @@ export default function EdiatableBlogCards({post}) {
             <span className="text-xs text-gray-400">{new Date(post.createdAt).toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})}</span>
 
         </div>
-        <div className="space-x-2 flex gap-3 items-center">
+        <div className="space-x-2 flex sm:gap-2 items-center">
           {currentStatus === "PUBLISHED" ? <Button onClick={()=> handleConvertToDraft(post.id)} variant="outline">Convert to Draft</Button> : <Button onClick={()=> publishABlog(post.id)}>Publish</Button>}
                 <Button onClick={()=> router.push(`/draft/${post.slug}`)} variant="outline">Edit</Button>
                 {currentStatus === "PUBLISHED" && <Button onClick={()=> router.push(`/blog/${post.slug}`)}>View</Button>}
