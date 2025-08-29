@@ -4,7 +4,7 @@ import Link from "next/link"
 const blogs=[{title:"Next Js vs React js",content:"content","image":"/react-vs-next.jpeg",url:'react-vs-next'},{title:"Backend developer",content:"content",image:'/backend.jpeg',url:'backend'},{title:"Remote Job",content:"content",image:'/remote.jpeg',url:'remote'}]
 
 async function getBlogs(){
-    const res=await fetch(`${process.env.BASE_URL}/api/v1/get`)
+    const res=await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/get`)
     const data=await res.json()
     return data.posts;
     
