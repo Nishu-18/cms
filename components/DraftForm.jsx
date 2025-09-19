@@ -158,7 +158,7 @@ export default function DraftForm({onSave,initialData}) {
         
         Give a brief on the type of content you want to generate
       </DialogDescription>
-      <textarea  ref={ideaRef} value={"loading...."} className="bg-zinc-800 p-2 rounded outline-none" rows={10}/>
+      <textarea  ref={ideaRef}  className="bg-zinc-800 p-2 rounded outline-none" rows={10}/>
     </DialogHeader>
     <DialogFooter>
         {loading?<Loader2 className="h-6 w-6 animate-spin "/>:null}
