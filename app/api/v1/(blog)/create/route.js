@@ -1,8 +1,13 @@
+export const runtime = "nodejs";
+
 import prisma from "../../../../../lib/prisma";
 import { getAuthSession } from "../../../../../lib/auth";
 import { NextResponse } from "next/server";
 
 export async function  POST(request) {
+    console.log("post req hit ");
+    
+    
     const session=await getAuthSession();
     
   
@@ -47,16 +52,22 @@ export async function  POST(request) {
         }
         
     })
-    return NextResponse.json({post},{status:201});
+    return NextResponse.json({message:"Post created"},{status:201});
         
     } catch (error) {
-        console.log(error);
+        console.error(error);
         
-        return NextResponse.json({message:"Failed to create post"},{status:500});
+        return NextResponse.json({message:error.message||"Failed to create post fr"},{status:500});
         
     }
    
  
+
+}
+export async function GET(request){
+    console.log("get req hit");
+    
+    return NextResponse.json({message:"GET"},{status:200})
 
 }
     

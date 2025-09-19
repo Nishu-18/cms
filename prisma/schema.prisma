@@ -73,7 +73,7 @@ model VerificationToken {
 }
 
 model Post{
-  id String @unique @default(cuid())
+  id String @id @unique @default(cuid())
   title   String
   slug    String @unique 
   content String

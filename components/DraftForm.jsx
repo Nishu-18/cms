@@ -38,6 +38,7 @@ const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false })
 export default function DraftForm({onSave,initialData}) {
     
     const reactQuilRef=useRef(null)
+    const [loading,setLoading]=useState(false)
     const ideaRef=useRef(null)
     
     const [ogImage,setOgImage]=useState("")
@@ -53,6 +54,7 @@ export default function DraftForm({onSave,initialData}) {
         try {
             const response=await AIContent({text:ideaRef.current.value,customInstructions:'Generate content with proper facts',contentGen:true});
             setContent(response)
+            setLoading(true)
             
             
             
@@ -62,6 +64,7 @@ export default function DraftForm({onSave,initialData}) {
             
         }finally{
             closeDialogRef.current.click()
+            setLoading(false)
         }
     }
     const handleSelectionChange=async()=>{
@@ -146,10 +149,11 @@ export default function DraftForm({onSave,initialData}) {
     <DialogHeader>
         <DialogTitle>Generate Content</DialogTitle>
      
-      <DialogDescription>
+      <DialogDescription >
+        
         Give a brief on the type of content you want to generate
       </DialogDescription>
-      <textarea ref={ideaRef} className="bg-zinc-800 p-2 rounded outline-none" rows={10}/>
+      <textarea value={loading?"Loading...":content} ref={ideaRef} className="bg-zinc-800 p-2 rounded outline-none" rows={10}/>
     </DialogHeader>
     <DialogFooter>
         <Button onClick={handleGenerateContentUsingAI} >Generate</Button>
