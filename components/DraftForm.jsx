@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form"
 import dynamic from "next/dynamic";
 import {z, ZodError} from "zod"
-import { Sparkle } from "lucide-react";
+import { Sparkle,Loader2 } from "lucide-react";
 
 
 import 'react-quill-new/dist/quill.snow.css';
@@ -24,6 +24,7 @@ import {
 import { Button } from "./ui/button";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { AIContent } from "../lib/ai-content";
+import { Spinner } from "./ui/shadcn-io/spinner";
 
 const schema=z.object({
     title:z.string().min(10,{message:"Title must be at least 10 characters long"}).min(1,{message:"Title is required"}),
@@ -51,10 +52,11 @@ export default function DraftForm({onSave,initialData}) {
     const [selection,setSelection]=useState(false)
 
     const handleGenerateContentUsingAI=async()=>{
+        setLoading(true)
         try {
             const response=await AIContent({text:ideaRef.current.value,customInstructions:'Generate content with proper facts',contentGen:true});
             setContent(response)
-            setLoading(true)
+            
             
             
             
@@ -74,6 +76,7 @@ export default function DraftForm({onSave,initialData}) {
         setSelection(selection && selection.length>0);
     }
     const handleRePhase=async()=>{
+        setLoading(true)
         const selection=reactQuilRef.current.getEditor().getSelection();
         try {
             if(selection && selection.length>0){
@@ -89,6 +92,8 @@ export default function DraftForm({onSave,initialData}) {
         } catch (error) {
             log(error.message);
             
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -153,11 +158,12 @@ export default function DraftForm({onSave,initialData}) {
         
         Give a brief on the type of content you want to generate
       </DialogDescription>
-      <textarea value={loading?"Loading...":content} ref={ideaRef} className="bg-zinc-800 p-2 rounded outline-none" rows={10}/>
+      <textarea  ref={ideaRef} value={"loading...."} className="bg-zinc-800 p-2 rounded outline-none" rows={10}/>
     </DialogHeader>
     <DialogFooter>
-        <Button onClick={handleGenerateContentUsingAI} >Generate</Button>
-        <DialogClose ref={closeDialogRef} asChild><Button variant={"ghost"}>Close</Button></DialogClose>
+        {loading?<Loader2 className="h-6 w-6 animate-spin "/>:null}
+        <Button onClick={handleGenerateContentUsingAI}  >Generate</Button>
+        <DialogClose ref={closeDialogRef} asChild><Button  variant={"ghost"}>Close</Button></DialogClose>
     </DialogFooter>
   </DialogContent>
   

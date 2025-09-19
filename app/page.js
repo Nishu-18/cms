@@ -43,17 +43,17 @@ export default async function LandingPage() {
           <span className="flex flex-col items-center justify-center gap-2">
             <Pencil size={50} />
             <h3 className="text-xl font-bold text-gray-100">Intutive Editor</h3>
-            <p className="text-gray-400 text-center w-[70%]">Create and edit content with user friendly interface</p>
+            <p className="text-gray-400 text-center w-[70%]">Write and format posts effortlessly with a clean, distraction-free editing experience.</p>
           </span>
           <span className="flex flex-col items-center justify-center gap-2">
             <Layers size={50} />
-            <h3 className="text-xl font-bold text-gray-100">Intutive Editor</h3>
-            <p className="text-gray-400 text-center w-[70%]"> Create and edit content with user friendly interface</p>
+            <h3 className="text-xl font-bold text-gray-100">Flexible Tools</h3>
+            <p className="text-gray-400 text-center w-[70%]"> Customize your workflow with AI assistance, SEO controls, and media uploads all in one place.</p>
           </span>
           <span className="flex flex-col items-center justify-center gap-2">
             <Zap size={50} />
-            <h3 className="text-xl font-bold text-gray-100">Intutive Editor</h3>
-            <p className="text-gray-400 text-center w-[70%]">Create and edit content with user friendly interface</p>
+            <h3 className="text-xl font-bold text-gray-100">Blazing Fast</h3>
+            <p className="text-gray-400 text-center w-[70%]">Enjoy lightning-quick performance powered by Next.js and a scalable backend.</p>
           </span>
         </div>
 
